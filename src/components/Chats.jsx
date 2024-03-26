@@ -11,26 +11,27 @@ export function Chats() {
     const { dispatch } = useContext(ChatContext);
 
     useEffect(() => {
-
-        function getChats() {
-            const unsub = onSnapshot(doc(db, "userChats", currentUser.uid), (doc) => {
+      const getChats = () => {
+        const unsub = onSnapshot(doc(db, "userChats", currentUser.uid), (doc) => {
             setChats(doc.data());
-            });
-            return () => {
-                unsub();
-            };     
-    };  
+            console.log(chats)
+        });
+
+      return () => {
+        unsub();
+      };
+    };
+
     currentUser.uid && getChats();    
  }, [currentUser.uid]);
 
     const handleSelect = (user) => {
         dispatch({ type:"CHANGE_USER", payload: user });
     };
-
     
     return (
         <div className='chats'>
-            {chats && Object.entries(chats)?.map((chat) => (
+            {Object.entries(chats).map((chat) => (
             <div className='userchat' key={chat[0]} onClick={() => handleSelect(chat[1].userInfo)} >
             <img src={chat[1].userInfo.photoURL}/>
                 <div className='userchatinfo'>

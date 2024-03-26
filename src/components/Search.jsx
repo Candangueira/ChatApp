@@ -63,7 +63,8 @@ export function Search() {
 
     setUser(null);
     setUsername('');
-    }
+    };
+    
     return (
         <>
         <div className='search'>

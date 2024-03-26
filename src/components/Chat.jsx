@@ -1,11 +1,11 @@
-import { React, useContext } from 'react';
+import React, { useContext } from 'react';
 import { Messages } from './Messages';
 import { ChatContext } from '../context/ChatContext';
 
 export function Chat() {
 
     const { data } = useContext(ChatContext);
-
+    // console.log("ei" + data.user.displayName);
     return (
         <>
         <div className='chat'>
