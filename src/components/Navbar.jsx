@@ -1,9 +1,11 @@
-import { React } from 'react';
+import { React, useContext } from 'react';
 import { signOut } from 'firebase/auth';
 import { auth } from '../firebase';
 import { useNavigate } from 'react-router-dom';
+import { AuthContext } from '../context/AuthContext';
 
 export function Navbar() {
+    const {currentUser} = useContext(AuthContext);
     const navigate = useNavigate();
 
     const handleSignOut = () => {
@@ -22,8 +24,8 @@ export function Navbar() {
             <div className='navbar'>
                 <span className='logo'>Chat</span>
                 <span className='user'>
-                    <img src='../src/assets/imgs/cassio.jpg' alt='avatar' className='avatar'/>
-                    <span>Username</span>
+                    <img src={currentUser.photoURL} alt='avatar' className='avatar'/>
+                    <span>{currentUser.displayName}</span>
                     <button onClick={handleSignOut}>Logout</button>
                 </span>
             </div>
