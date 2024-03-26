@@ -33,27 +33,26 @@ export function Search() {
         try {
             const res = await getDoc(doc(db, 'chats', combinedId));
 
-            if(!res.exists()) {
-                // create a chat in chats collection
-                await setDoc(doc(db, 'chats', combinedId), {
-                    messages: []
-                });
+             if (!res.exists()) {
+            //create a chat in chats collection
+            await setDoc(doc(db, "chats", combinedId), { messages: [] });
 
-            await updateDoc(doc(db, 'userChats', currentUser.uid), {
-                [combinedId+"userInfo"]:{
-                    uid: user.uid,
-                    displayName: user.displayName,
-                    photoURL: user.photoURL
-                },
-                [combinedId+'date']: serverTimestamp()
-            });
-            
-            await updateDoc(doc(db, 'userChats', user.uid), {
-                [combinedId + ".userInfo"]:{
-                    uid: currentUser.uid,
-                    displayName: currentUser.displayName,
-                    photoURL: currentUser.photoURL
-                },
+            //create user chats
+            await updateDoc(doc(db, "userChats", currentUser.uid), {
+          [combinedId + ".userInfo"]: {
+            uid: user.uid,
+            displayName: user.displayName,
+            photoURL: user.photoURL,
+          },
+          [combinedId + ".date"]: serverTimestamp(),
+        });
+
+        await updateDoc(doc(db, "userChats", user.uid), {
+          [combinedId + ".userInfo"]: {
+            uid: currentUser.uid,
+            displayName: currentUser.displayName,
+            photoURL: currentUser.photoURL,
+          },
                 [combinedId + '.date']: serverTimestamp()
             });
 
@@ -61,12 +60,15 @@ export function Search() {
         } catch (error) {
             console.error("Error adding document: ", error);
         }
+
+    setUser(null);
+    setUsername('');
     }
     return (
         <>
         <div className='search'>
             <div className='searchbar'>
-                <input type='text' placeholder='Search for friends' onKeyDown={handleKey} onChange={(e)=>setUsername(e.target.value)}/>
+                <input type='text' placeholder='Search for friends' onKeyDown={handleKey} onChange={(e)=>setUsername(e.target.value)} value={username}/>
             </div>
         </div>
         {error && <span className='error'>User not found</span>}
