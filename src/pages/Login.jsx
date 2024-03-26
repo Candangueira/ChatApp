@@ -2,7 +2,8 @@ import { CgProfile } from "react-icons/cg";
 import { doc, setDoc } from "firebase/firestore";
 import { useNavigate, Link } from "react-router-dom";
 import { useState } from "react";
-import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { auth } from "../firebase";
 
 export function Login() {
     const [error, setError] = useState(false);
@@ -15,7 +16,7 @@ export function Login() {
 
         try { 
             await signInWithEmailAndPassword(auth, email, password);
-            navigate("login");    
+            navigate("/");    
         } catch (err) {
             setError(true);
         }
@@ -27,7 +28,7 @@ export function Login() {
                 <span className='logo'>Chat</span>
                 <span className='title'>Login</span>
                     <form onSubmit={handleSubmit}>
-                        <input type='text' placeholder='Name'/>
+                        <input type='email' placeholder='email'/>
                         <input type='password' placeholder='Password'/>
                         <button>Sign in</button>
                         {error && <span className='error'>Something went wrong!</span>}
