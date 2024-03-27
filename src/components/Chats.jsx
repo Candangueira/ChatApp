@@ -29,9 +29,10 @@ export function Chats() {
         dispatch({ type:"CHANGE_USER", payload: user });
     };
     
+    console.log(chats);
     return (
         <div className='chats'>
-            {Object.entries(chats).map((chat) => (
+            {Object.entries(chats)?.map((chat) => (
             <div className='userchat' key={chat[0]} onClick={() => handleSelect(chat[1].userInfo)} >
             <img src={chat[1].userInfo.photoURL}/>
                 <div className='userchatinfo'>

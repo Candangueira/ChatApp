@@ -25,10 +25,10 @@ export function Register() {
 
             //Create a unique image name
             const date = new Date().getTime();
-            const storageRef = ref(storage, displayName);
+            const storageRef = ref(storage,`${displayName + date}`);
             
             await uploadBytesResumable(storageRef, file).then(() => {
-            getDownloadURL(storageRef).then(async (downloadURL) => {
+            getDownloadURL(storageRef).then(async(downloadURL) => {
             try {
                 //Update profile
                 await updateProfile(res.user, {
