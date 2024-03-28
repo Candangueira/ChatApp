@@ -2,7 +2,11 @@ import { React } from 'react';
 import { BiSolidImageAdd } from "react-icons/bi";
 import { GrAttachment } from "react-icons/gr";
 
+
 export function Input() {
+    const { currentUser } = useContext(AuthContext);
+    const { data } = useContext(ChatContext);
+
     return (
         <>
         <div className='input'> 
