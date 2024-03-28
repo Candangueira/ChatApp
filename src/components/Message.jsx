@@ -7,19 +7,19 @@ export function Message({message}) {
     const { currentUser } = useContext(AuthContext);
     const { data } = useContext(ChatContext);
 
-    console.log(message);
+    // console.log(message);
     return (
         <>
-        <div className='message owner'>
-            {/* <div className='messageinfo'>
-                <img src='../src/assets/imgs/cassio.jpg'></img>
+        <div className={`message ${message.sendId === currentUser.uid && 'owner'}`}>
+            <div className='messageinfo'>
+                <img src={message.senderId === currentUser.uid ? currentUser.photoURL : data.user.photoURL}/>
                 <span>just now</span>
             </div>
             <div className='messagecontent'>
-                <p>message</p>
-                 <img src='../src/assets/imgs/cassio.jpg' className="image-message"></img> 
+                <p>{message.text}</p>
+                {message.img && <img src={message.img}/>}
             </div>
-             */}
+            
         </div>
         </>
     )
