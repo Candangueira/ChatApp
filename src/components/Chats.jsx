@@ -29,7 +29,7 @@ export function Chats() {
         dispatch({ type:"CHANGE_USER", payload: user });
     };
     
-    console.log(chats);
+    // console.log(chats);
     return (
         <div className='chats'>
             {Object.entries(chats)?.map((chat) => (
