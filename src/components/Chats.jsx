@@ -14,7 +14,6 @@ export function Chats() {
       const getChats = () => {
         const unsub = onSnapshot(doc(db, "userChats", currentUser.uid), (doc) => {
             setChats(doc.data());
-            console.log(chats)
         });
 
       return () => {
@@ -29,7 +28,6 @@ export function Chats() {
         dispatch({ type:"CHANGE_USER", payload: user });
     };
     
-    // console.log(chats);
     return (
         <div className='chats'>
             {Object.entries(chats)?.sort((a,b)=>b[1].date -a[1].date).map((chat) => (
