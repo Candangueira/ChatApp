@@ -8,8 +8,8 @@ export const ChatContextProvider = ({ children }) => {
   const { currentUser } = useContext(AuthContext);
   
   const INITIAL_STATE = {
-    chatId: "null",
-    user: {},
+      chatId: "null",
+      user: {},
   };
   // update the chatId and the user based on the user
   const chatReducer = (state, action) => {
@@ -24,7 +24,7 @@ export const ChatContextProvider = ({ children }) => {
         };
 
       default:
-        return state;
+        return;
     }
   };
 

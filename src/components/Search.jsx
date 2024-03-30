@@ -13,6 +13,7 @@ export function Search() {
 
     async function handleSearch() {
         const q = query(collection(db, "users"), where("displayName", "==", username));
+
       try {
           // search for users
           const querySnapshot = await getDocs(q);
@@ -21,11 +22,13 @@ export function Search() {
           // doc.data() is never undefined for query doc snapshots
           // set the user found.
           setUser(doc.data())
+          console.log("doc");
         });
-      } catch(error) {
-          setError(error);
-          console.log(error);
+      } catch(e) {
+          setError(e);
+          console.log(e);
       }
+
     };
 
     function handleKey(e) {
@@ -40,10 +43,10 @@ export function Search() {
             const res = await getDoc(doc(db, 'chats', combinedId));
 
              if (!res.exists()) {
-            //create a chat in chats collection is chat does not exist.
+            // create a chat in chats collection if chat does not exist.
             await setDoc(doc(db, "chats", combinedId), { messages: [] });
 
-            //create user chats
+            //create userChats
             await updateDoc(doc(db, "userChats", currentUser.uid), {
           [combinedId + ".userInfo"]: {
             uid: user.uid,
@@ -52,7 +55,8 @@ export function Search() {
           },
           [combinedId + ".date"]: serverTimestamp(),
         });
-
+        
+        //create userChats for the other user.
         await updateDoc(doc(db, "userChats", user.uid), {
           [combinedId + ".userInfo"]: {
             uid: currentUser.uid,
@@ -63,12 +67,12 @@ export function Search() {
             });
 
             }
-        } catch (error) {
-            console.error("Error adding document: ", error);
+        } catch (err) {
+            console.log("Error adding document: ", err);
         }
 
-    setUser(null);
-    setUsername('');
+        setUser(null);
+        setUsername('');
     };
     
     return (

@@ -12,11 +12,13 @@ export function Chats() {
 
     useEffect(() => {
       const getChats = () => {
+        // returns realtime updates of the userChats collection.
         const unsub = onSnapshot(doc(db, "userChats", currentUser.uid), (doc) => {
             setChats(doc.data());
         });
 
       return () => {
+        // clean up function.
         unsub();
       };
     };
