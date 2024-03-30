@@ -4,7 +4,9 @@ import { db } from '../firebase';
 import { AuthContext } from '../context/AuthContext';
 
 export function Search() {
+    // the name on the typed 'search user'
     const [username, setUsername] = useState('');
+    // if the is a user with this name , retrieves the user that is found
     const [user, setUser ] = useState(null);
     const [error, setError] = useState(false);
     const {currentUser} = useContext(AuthContext);
@@ -12,14 +14,17 @@ export function Search() {
     async function handleSearch() {
         const q = query(collection(db, "users"), where("displayName", "==", username));
       try {
-        const querySnapshot = await getDocs(q);
-        querySnapshot.forEach((doc) => {
-        // doc.data() is never undefined for query doc snapshots
-        setUser(doc.data())
+          // search for users
+          const querySnapshot = await getDocs(q);
+          // return the user found.
+          querySnapshot.forEach((doc) => {
+          // doc.data() is never undefined for query doc snapshots
+          // set the user found.
+          setUser(doc.data())
         });
       } catch(error) {
-        setError(error);
-        console.log(error);
+          setError(error);
+          console.log(error);
       }
     };
 
@@ -27,14 +32,15 @@ export function Search() {
         e.code === "Enter" && handleSearch();
     }
 
+    // handles the selection of the user found on the sidebar.
     async function handleSelect() {
-        // check if chat exists or not. If not create a new one.
+        // check if chats(firestore) exists or not. If not create a new one.
         const combinedId = currentUser.uid > user.uid ? currentUser.uid + user.uid : user.uid + currentUser.uid;
         try {
             const res = await getDoc(doc(db, 'chats', combinedId));
 
              if (!res.exists()) {
-            //create a chat in chats collection
+            //create a chat in chats collection is chat does not exist.
             await setDoc(doc(db, "chats", combinedId), { messages: [] });
 
             //create user chats
@@ -74,7 +80,7 @@ export function Search() {
         </div>
         {error && <span className='error'>User not found</span>}
         {user && <div className='userchat' onClick={handleSelect}>
-            <img src={user.photoURL}></img>
+            <img src={user.photoURL}/>
             <div className='userchatinfo'>
                 <span>{user.displayName}</span>
             </div>
