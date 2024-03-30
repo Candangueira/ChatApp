@@ -11,7 +11,7 @@ export const ChatContextProvider = ({ children }) => {
     chatId: "null",
     user: {},
   };
-  // 
+  // update the chatId and the user based on the user
   const chatReducer = (state, action) => {
     switch (action.type) {
       case "CHANGE_USER":
@@ -28,6 +28,7 @@ export const ChatContextProvider = ({ children }) => {
     }
   };
 
+  // useReducer to manage the state
   const [state, dispatch] = useReducer(chatReducer, INITIAL_STATE);
 
   return (
