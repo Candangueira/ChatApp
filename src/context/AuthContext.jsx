@@ -5,14 +5,17 @@ import { onAuthStateChanged } from 'firebase/auth';
 export const AuthContext = createContext();
 
 export const AuthContextProvider = ({ children }) => {
+  // State to hold the current user
   const [currentUser, setCurrentUser] = useState({});
 
+  // Effect hook to listen to the authentication state
   useEffect(() => {
+    // Unsubscribe function to stop listening to the authentication state
     const unsub = onAuthStateChanged(auth, (user) => {
       setCurrentUser(user);
-      console.log(user);
     });
 
+    // Cleanup function
     return () => {
       unsub();
     };

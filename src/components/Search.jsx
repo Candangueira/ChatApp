@@ -22,7 +22,6 @@ export function Search() {
           // doc.data() is never undefined for query doc snapshots
           // set the user found.
           setUser(doc.data())
-          console.log("doc");
         });
       } catch(e) {
           setError(e);

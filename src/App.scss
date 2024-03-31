@@ -51,7 +51,6 @@
 }
 
 .home {
-    // background-color: red;
     display: flex;
     width: 120vh;
     height: 90vh;
@@ -187,6 +186,7 @@
 
             .messages {
                 height: calc(100% - 139px);
+                width: 100%;
                 font-size: 14px;
                 text-align: start;
                 padding: 10px 0px 10px 20px;

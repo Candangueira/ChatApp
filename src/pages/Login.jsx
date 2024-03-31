@@ -8,18 +8,24 @@ import { auth } from "../firebase";
 import { ChatContext } from "../context/ChatContext";
 
 export function Login() {
+    // State variable to store the error
     const [error, setError] = useState(false);
+
+    // Accessing the dispatch function from the chat context
     const { dispatch } = useContext(ChatContext);
     const navigate = useNavigate();
 
+    // Function to handle the login of a user
     const handleSubmit = async(e) =>{
         e.preventDefault();
         const email = e.target[0].value;
         const password = e.target[1].value;
 
+        // Sign in the user
         try { 
             await signInWithEmailAndPassword(auth, email, password);
             navigate("/");
+            // Reset the chat context
             dispatch({ type:"RESET", payload: "" });    
         } catch (err) {
             setError(true);
