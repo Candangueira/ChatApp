@@ -6,12 +6,18 @@ import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { doc, setDoc } from "firebase/firestore"; 
 import { db } from '../firebase';
 import { useNavigate, Link } from 'react-router-dom';
+import { ChatContext } from "../context/ChatContext";
+import { useContext } from 'react';
 
 export function Register() {
-
+    // State variable to store the error
     const [error, setError] = useState(false);
+    // Accessing the dispatch function from the chat context
+    const { dispatch } = useContext(ChatContext);
+    // Hook to navigate to a different page
     const navigate = useNavigate();
 
+    // Function to handle the registration of a new user
     const handleSubmit = async(e) =>{
         e.preventDefault();
         const displayName = e.target[0].value;
@@ -23,10 +29,12 @@ export function Register() {
             //Create user
             const res = await createUserWithEmailAndPassword(auth, email, password);
 
-            //Create a unique image name
+            // Get the current time
             const date = new Date().getTime();
+            // Create a reference to the storage location
             const storageRef = ref(storage,`${displayName + date}`);
             
+            // Upload the image to the storage
             await uploadBytesResumable(storageRef, file).then(() => {
             getDownloadURL(storageRef).then(async(downloadURL) => {
             try {
@@ -48,6 +56,7 @@ export function Register() {
                 //create empty userchats on firestore
                 await setDoc(doc(db, "userChats", res.user.uid), {});
                 navigate("/");
+                dispatch({ type:"RESET", payload: "" }); 
             } catch (err) {
                 console.log(err);
                 setError(true);

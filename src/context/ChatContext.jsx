@@ -37,7 +37,7 @@ export const ChatContextProvider = ({ children }) => {
   };
 
 
-  // useReducer to manage the state
+  // useReducer to manage the state of the chat
   const [state, dispatch] = useReducer(chatReducer, INITIAL_STATE);
 
   return (

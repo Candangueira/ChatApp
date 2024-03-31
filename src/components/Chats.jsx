@@ -5,11 +5,14 @@ import { ChatContext } from '../context/ChatContext';
 import { db } from '../firebase';
 
 export function Chats() {
-
+    // State variable to store the chats
     const [chats, setChats] = useState([]);
+
+    // Accessing the current user from the authentication context
     const { currentUser } = useContext(AuthContext);
     const { dispatch } = useContext(ChatContext);
 
+    // Function to handle the selection of a user in the chat list
     useEffect(() => {
       const getChats = () => {
         // returns realtime updates of the userChats collection.

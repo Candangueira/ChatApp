@@ -19,7 +19,6 @@ export function Login() {
 
         try { 
             await signInWithEmailAndPassword(auth, email, password);
-            console.log("SIGN IN WITH EMAIL AND PASSWORD: "+ signInWithEmailAndPassword);
             navigate("/");
             dispatch({ type:"RESET", payload: "" });    
         } catch (err) {
