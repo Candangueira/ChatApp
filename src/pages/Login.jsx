@@ -1,12 +1,15 @@
-import { CgProfile } from "react-icons/cg";
-import { doc, setDoc } from "firebase/firestore";
+// import { CgProfile } from "react-icons/cg";
+// import { doc, setDoc } from "firebase/firestore";
+import { useContext } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { useState } from "react";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../firebase";
+import { ChatContext } from "../context/ChatContext";
 
 export function Login() {
     const [error, setError] = useState(false);
+    const { dispatch } = useContext(ChatContext);
     const navigate = useNavigate();
 
     const handleSubmit = async(e) =>{
@@ -16,7 +19,9 @@ export function Login() {
 
         try { 
             await signInWithEmailAndPassword(auth, email, password);
-            navigate("/");    
+            console.log("SIGN IN WITH EMAIL AND PASSWORD: "+ signInWithEmailAndPassword);
+            navigate("/");
+            dispatch({ type:"RESET", payload: "" });    
         } catch (err) {
             setError(true);
         }

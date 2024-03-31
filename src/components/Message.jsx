@@ -11,7 +11,6 @@ export function Message({message}) {
     useEffect(() => {
         ref.current?.scrollIntoView({ behavior: "smooth" });
     }, [message]);
-    console.log(message);
 
     return (
         <>
@@ -20,8 +19,8 @@ export function Message({message}) {
                 <img src={message.senderId === currentUser.uid ? currentUser.photoURL : data.user.photoURL}/>
             </div>
             <div className='messagecontent'>
-                <p>{message.text}</p>
-                {message.img && <img src={message.img} alt=''/>}
+                {message.text && <p>{message.text}</p>}
+                <img src={message.img} alt=''/>
             </div>
             
         </div>
